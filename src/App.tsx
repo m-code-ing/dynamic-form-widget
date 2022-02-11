@@ -1,25 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Grid } from "@mui/material";
+import React, { useState } from "react";
+import CheckboxLabels from "./components/Checkbox";
+import DynamicFormInput from "./components/DynamicFormInput";
+import RadioButtonsGroup from "./components/RadioButtonsGroup";
+import BasicTextFields from "./components/TextField";
 
 function App() {
+  const [inputTypeList, setinputTypeList] = useState<string[]>([]);
+
+  const displayInputList = (list: string[]) => {
+    setinputTypeList(list);
+  };
+
+  console.log(inputTypeList);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Grid container direction="column" alignItems="center" my={3}>
+      <Grid item>
+        <DynamicFormInput
+          displayInputList={displayInputList}></DynamicFormInput>
+      </Grid>
+      {inputTypeList.map((input, index) => {
+        return (
+          <Grid item my={2} key={index}>
+            {input === "RadioButton" ? (
+              <RadioButtonsGroup />
+            ) : (
+              <CheckboxLabels />
+            )}
+          </Grid>
+        );
+      })}
+    </Grid>
   );
 }
 
